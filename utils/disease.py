@@ -1,4 +1,5 @@
 disease_dic = {
+    'Background_without_leaves': """ This is not a Crop Leaf Image.""",
     'Apple___Apple_scab': """ <b>Crop</b>: Apple <br/>Disease: Apple Scab<br/>
         <br/> Cause of disease:
 

@@ -13,6 +13,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
+
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -23,6 +24,7 @@ disease_classes = ['Apple___Apple_scab',
                    'Apple___Black_rot',
                    'Apple___Cedar_apple_rust',
                    'Apple___healthy',
+                   """Background___WithoutLeaves256'"""
                    'Blueberry___healthy',
                    'Cherry_(including_sour)___Powdery_mildew',
                    'Cherry_(including_sour)___healthy',
@@ -107,7 +109,7 @@ def predict_image(img, model=disease_model):
     :return: prediction (string)
     """
     transform = transforms.Compose([
-        transforms.Resize(256),
+        transforms.Resize((256,256)),
         transforms.ToTensor(),
     ])
     image = Image.open(io.BytesIO(img))
@@ -127,7 +129,7 @@ def predict_image(img, model=disease_model):
 
 
 app = Flask(__name__)
-
+app.config['ALLOWED_EXTENSIONS']=['.jpg','.jpeg','.png','.gif']
 # render home page
 
 
@@ -167,7 +169,7 @@ def fertilizer_recommendation():
 
 @ app.route('/crop-predict', methods=['POST'])
 def crop_prediction():
-    title = 'Harvestify - Crop Recommendation'
+    title = 'Easy Agriculture - Crop Recommendation'
 
     if request.method == 'POST':
         N = int(request.form['nitrogen'])
@@ -241,7 +243,7 @@ def fert_recommend():
 @app.route('/disease-predict', methods=['GET', 'POST'])
 def disease_prediction():
     title = 'Easy Agriculture - Disease Detection'
-
+    #ALLOWED_EXTENSIONS = {'txt','png', 'jpg', 'jpeg'}
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
