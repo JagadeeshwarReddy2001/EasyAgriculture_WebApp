@@ -24,7 +24,6 @@ disease_classes = ['Apple___Apple_scab',
                    'Apple___Black_rot',
                    'Apple___Cedar_apple_rust',
                    'Apple___healthy',
-                   """Background___WithoutLeaves256'"""
                    'Blueberry___healthy',
                    'Cherry_(including_sour)___Powdery_mildew',
                    'Cherry_(including_sour)___healthy',
@@ -109,7 +108,7 @@ def predict_image(img, model=disease_model):
     :return: prediction (string)
     """
     transform = transforms.Compose([
-        transforms.Resize((256,256)),
+        transforms.Resize(256),
         transforms.ToTensor(),
     ])
     image = Image.open(io.BytesIO(img))
